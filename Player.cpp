@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "fstream"
+#include "CavalryFactory.h"
+#include "Cell.h"
 Player::Player(int number): number(number)
 {
 	std::cout << "Player()" << std::endl;
@@ -89,12 +91,12 @@ void Player::Load()
 		if (str[i] == 'F' && str[i + 1] == 'C')
 		{
 			std::cout << "CavFac";
-			
+
 			int playerNum = 0;
 			int x = 0;
 			int y = 0;
 			std::string T;
-			
+
 			while (str[i] != ';')
 			{
 				playerNum = FromStrToNumber(&str[i], 1);
@@ -112,36 +114,66 @@ void Player::Load()
 			//{
 			//	i++;
 			//}
-			
+
 			std::string strx;
 			//while (str[i] == 'x' && str[i+1] == ':')
 			//{
 			//	i++;
 			//}
-		    //        while (str[i] != ';')
+			//        while (str[i] != ';')
 			//		{
 			//			x = FromStrToNumber(&str[i], 1);
 //std::cout << "Strx = " << strx;
 			//			i++;
 			//		}
-			while(str[i]!= ':')
+			while (str[i] != ':')
 			{
 				i++;
 			}
 			while (str[i] != ';')
 			{
-				strx = std::to_string(str[i]);
-				//x = FromStrToNumber(&str[i], 1);
+				//strx = std::to_string(str[i]);
+				x = FromStrToNumber(&str[i], 1);
 				i++;
 			}
-				x = FromStrToNumber(strx);
-				std::cout << "X = " << x << std::endl;
+			//x = FromStrToNumber(strx);
+			std::cout << "X = " << x << std::endl;
+		
+		while (str[i] != ':')
+		{
+			i++;
 		}
+		while (str[i] != ';')
+		{
+			
+			y = FromStrToNumber(&str[i], 1);
+			i++;
+		}
+		
+		std::cout << "Y = " << y << std::endl;
+	
+		while (str[i] != ':')
+		{
+			i++;
+		}
+		while (str[i+1] != '/')
+		{
+			
+			T += str[i+1];
+			i++;
+		}
+	
+		std::cout << "T = " << T << std::endl;
+		Cell cell(T, y, x);
+		CavalryFactory* cFactoryPtr = new CavalryFactory(cell,this);
+		std::cout << "Factory F" << std::endl;
+	}
 		else
 		{
 			std::cout << "Eror in load" << std::endl;
 		}
 		std::cout << std::endl;
+		
     }
 	std::cout << "Load - " << str << std::endl;
 	ou.close();
